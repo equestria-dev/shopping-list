@@ -1,0 +1,8 @@
+data/*
+tokens/*
+app/.vercel
+app/.env.development.local
+app/app.html
+config.yml
+.buildroot
+build.tar.xz

@@ -1,0 +1,67 @@
+# Enter your name here, it will show up in the UI:
+name: "Raindrops"
+
+# Enable the Vercel analytics
+vercel: true
+
+# Set the default currency
+currency: "€"
+
+# Configure the default Steam module
+steam:
+  # Enable the module
+  enable: true
+
+  # The name of the module in the UI
+  name: "Video games"
+
+  # Your Steam user ID or profile name
+  id: "RaindropsSys"
+
+  # The recommendation index of Steam
+  index: 0
+
+  # Notes to associate with Steam games
+  notes:
+    219890: "A friend recommended this game, don't know much about it."
+
+# Add custom items to the wishlist
+custom:
+
+  # Create a new group
+  tech:
+
+    # Name for the group
+    name: "Technology and multimedia"
+
+    # Recommendation index for the group
+    index: 2
+
+    # Items that are part of this group
+    items:
+      # Name for an item
+      - name: "Audio-Technica ATH-M50x Black"
+
+      # Link to the item page
+        link: "https://www.amazon.fr/dp/B00HVLUR86"
+
+      # Price of the item in cents
+        price: 14300
+
+      # If using a custom currency, specify the format here
+        unit: "$ %"
+
+      # URL to the item image
+        image: "https://m.media-amazon.com/images/I/71BR7ivLOAL._AC_SY879_.jpg"
+
+      # Source of the item to display in the UI
+        source: "Amazon.fr"
+
+      # Tags associated with the item
+        tags:
+          - "Headphones"
+          - "Studio equipment"
+          - "Professional audio"
+
+      # Note associated with the item
+        note: "Our current headphones are (slowly) breaking down (pieces of plastic are falling) and are not really that great quality. We would appreciate having higher quality headphones for listening to and making music."

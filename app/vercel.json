@@ -1,0 +1,44 @@
+{
+  "regions": ["fra1"],
+  "rewrites": [
+    {
+      "source": "/_region",
+      "destination": "/api/region"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/api/index"
+    },
+    {
+      "source": "/assets/(.*)",
+      "destination": "/assets/$1"
+    },
+    {
+      "source": "/favicon.ico",
+      "destination": "/assets/logo.png"
+    }
+  ],
+  "redirects": [
+    {
+      "source": "/app.html",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/app.html/",
+      "destination": "/",
+      "permanent": true
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, s-maxage=3600, maxage=86400, stale-while-revalidate=300, stale-if-error=86400"
+        }
+      ]
+    }
+  ]
+}
