@@ -1,10 +1,18 @@
 const fs = require('fs');
-const lists = require('./data/custom.json');
 const child_process = require("node:child_process");
 const YAML = require('yaml');
 
-const data = YAML.parse(fs.readFileSync("./config.yml").toString());
+let data;
+
+try {
+    data = YAML.parse(fs.readFileSync("./config.yml").toString());
+} catch (e) {
+    data = YAML.parse(fs.readFileSync("./config.default.yml").toString());
+}
+
 fs.writeFileSync("./data/config.json", JSON.stringify(data, null, 2));
+
+let lists = data["custom"] ?? {};
 
 (async () => {
     if (data["steam"]["enable"]) {
@@ -50,6 +58,6 @@ fs.writeFileSync("./data/config.json", JSON.stringify(data, null, 2));
     fs.writeFileSync("./app/app.html", child_process.execSync("php index.php", { cwd: "./public" }).toString());
 
     if (data['vercel']) {
-        //child_process.execSync("vercel --prod", { cwd: "./app", stdio: "inherit" });
+        child_process.execSync("vercel --prod", { cwd: "./app", stdio: "inherit" });
     }
 })();

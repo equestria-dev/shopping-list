@@ -6,3 +6,5 @@ app/app.html
 config.yml
 .buildroot
 build.tar.xz
+node_modules
+app/node_modules

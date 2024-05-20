@@ -104,6 +104,7 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
         </div>
     </div>
 
+    <?php if ($config["faq"]): ?>
     <h3>Frequently asked questions</h3>
     <div class="accordion" id="faq" style="margin-bottom: 15px;">
         <div class="accordion-item">
@@ -167,19 +168,24 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
             </div>
         </div>
     </div>
+    <?php endif; ?>
 
+    <?php if ($config["export"]): ?>
     <div class="small text-muted" style="margin-bottom: 15px;">
         All the data associated with your settings and budget on this page is saved on this browser only and is not sent to Equestria.dev or to your other devices.
         If you would like to transfer this data to other devices or back it up, you will need to <a href="#" onclick="dataImport();">import</a> or <a href="#" onclick="dataExport();">export</a> it.
     </div>
+    <?php endif; ?>
 
-    <div style="margin-bottom: 30px;" class="alert alert-warning">If you are unsure, do not prioritize Steam games. We don't play games a lot and some other items would be far more useful for us than games.</div>
+    <?php if (isset($config["notice"])): ?>
+    <div style="margin-bottom: 30px;" class="alert alert-warning"><?= $config["notice"] ?></div>
+    <?php endif; ?>
 
     <div id="filter-results" style="display: none; margin-bottom: 30px;" class="list-group"></div>
 
     <div id="all-items">
         <?php foreach ($lists as $list_name => $list): ?>
-            <h3><?= $list["title"] ?></h3>
+            <h3><?= $list["name"] ?? $list["title"] ?></h3>
             <div id="list-<?= $list_name ?>" class="list-group" style="margin-bottom: 30px;">
                 <?php foreach ($list["items"] as $item): $index = $item["_id"] ?? md5($item["name"]) ?>
                     <a data-recommend="<?= $list["recommend"] ?? -1 ?>" data-list="<?= $list_name ?>" id="item-<?= $list_name ?>-<?= $index ?>" data-score="<?= $item["score"] ?? -1 ?>" data-price="<?php
@@ -496,6 +502,7 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
             }
         }
 
+        <?php if ($config["export"]): ?>
         function dataExport() {
             let data = btoa(JSON.stringify(localStorage));
 
@@ -520,6 +527,7 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
                 location.reload();
             }
         }
+        <?php endif; ?>
 
         function save() {
             localStorage.setItem("sort", document.getElementById("sort").value);
