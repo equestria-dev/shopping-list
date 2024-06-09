@@ -8,3 +8,4 @@ config.yml
 build.tar.xz
 node_modules
 app/node_modules
+.vercel

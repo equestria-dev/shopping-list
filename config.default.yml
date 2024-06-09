@@ -28,7 +28,7 @@ steam:
   id: RaindropsSys
 
   # The recommendation index of Steam
-  index: 0
+  recommend: 0
 
   # Notes to associate with Steam games
   notes:
@@ -40,11 +40,14 @@ custom:
   # Create a new group
   tech:
 
+    # Whether the group should be considered not safe for work
+    nsfw: false
+
     # Name for the group
     name: Technology and multimedia
 
     # Recommendation index for the group
-    index: 2
+    recommend: 2
 
     # Items that are part of this group
     items:

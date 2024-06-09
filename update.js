@@ -25,8 +25,9 @@ let lists = data["custom"] ?? {};
         fs.writeFileSync("./data/notes.json", JSON.stringify(obj, null, 2));
 
         lists["steam"] = {
-            recommend: data['steam']['index'],
+            recommend: data['steam']['recommend'],
             title: data['steam']['name'],
+            nsfw: false,
             items: []
         };
 

@@ -16,15 +16,12 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
     <link href="/assets/bootstrap.min.css" rel="stylesheet">
     <script src="/assets/bootstrap.bundle.min.js"></script>
 
-    <?php if ($config["vercel"]): ?>
-        <script>
-            window.va = window.va || function () { (window.vaq = window.vaq || []).push(arguments); };
-        </script>
-        <script defer src="/_vercel/insights/script.js"></script>
-    <?php endif; ?>
-
     <link rel="shortcut icon" href="/assets/logo.png" type="image/png">
     <style>
+        body:not(.show-nsfw) .list-item-nsfw, body:not(.show-nsfw) .list-container-nsfw {
+            display: none;
+        }
+
         .list-item {
             display: grid;
             grid-template-columns: 8px 1fr 3fr 150px;
@@ -177,6 +174,10 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
     </div>
     <?php endif; ?>
 
+    <p>
+        <a onclick="toggleNSFW();" id="nsfw-toggle" href="#">Show not safe for work items</a>
+    </p>
+
     <?php if (isset($config["notice"])): ?>
     <div style="margin-bottom: 30px;" class="alert alert-warning"><?= $config["notice"] ?></div>
     <?php endif; ?>
@@ -185,83 +186,85 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
 
     <div id="all-items">
         <?php foreach ($lists as $list_name => $list): ?>
-            <h3><?= $list["name"] ?? $list["title"] ?></h3>
-            <div id="list-<?= $list_name ?>" class="list-group" style="margin-bottom: 30px;">
-                <?php foreach ($list["items"] as $item): $index = $item["_id"] ?? md5($item["name"]) ?>
-                    <a data-recommend="<?= $list["recommend"] ?? -1 ?>" data-list="<?= $list_name ?>" id="item-<?= $list_name ?>-<?= $index ?>" data-score="<?= $item["score"] ?? -1 ?>" data-price="<?php
+            <div class="list-container <?= $list["nsfw"] ? "list-container-nsfw" : "" ?>">
+                <h3><?= $list["name"] ?? $list["title"] ?></h3>
+                <div id="list-<?= $list_name ?>" class="list-group" style="margin-bottom: 30px;">
+                    <?php foreach ($list["items"] as $item): $index = $item["_id"] ?? md5($item["name"]) ?>
+                        <a data-recommend="<?= $list["recommend"] ?? -1 ?>" data-list="<?= $list_name ?>" id="item-<?= $list_name ?>-<?= $index ?>" data-score="<?= $item["score"] ?? -1 ?>" data-price="<?php
 
-                    $price = -200;
+                        $price = -200;
 
-                    if (isset($item["links"])) {
-                        $avg = array_sum(array_map(function ($i) {
-                                return $i["price"] ?? 0;
-                            }, $item["links"])) / count($item["links"]);
-                        $price = $avg;
-                    } else {
-                        $price = $item["price"] ?? -200;
-                    }
+                        if (isset($item["links"])) {
+                            $avg = array_sum(array_map(function ($i) {
+                                    return $i["price"] ?? 0;
+                                }, $item["links"])) / count($item["links"]);
+                            $price = $avg;
+                        } else {
+                            $price = $item["price"] ?? -200;
+                        }
 
-                    echo($price);
+                        echo($price);
 
-                    ?>" <?php if (isset($item["link"])): ?>href="<?= $item["link"] ?>" target="_blank"
-                       class="list-item list-item-sel list-group-item list-group-item-action"
-                       <?php else: ?>class="list-item list-item-sel list-group-item"<?php endif ?>>
-                        <div style="display: flex; align-items: center; justify-content: center;">
-                            <!--suppress HtmlFormInputWithoutLabel -->
-                            <input class="form-check-input item-select" onchange="updateBudget();" type="checkbox" value="" data-price="<?= $price ?>" disabled>
-                        </div>
-                        <div>
-                            <div class="bg-body-tertiary" style="aspect-ratio: 292/136; border-radius: 0.375rem; background-repeat: no-repeat; background-size: contain; background-position: center; <?php if (isset($item["image"])): ?>background-image: url('<?= $item["image"] ?>');<?php endif; ?>"></div>
-                        </div>
-                        <div <?php if (!isset($item["links"])): ?>style="display: flex; align-items: center;" <?php else: ?>style="margin-top: 10px; margin-bottom: 10px;"<?php endif; ?>>
+                        ?>" <?php if (isset($item["link"])): ?>href="<?= $item["link"] ?>" target="_blank"
+                           class="list-item list-item-sel list-group-item list-group-item-action <?= $list["nsfw"] ? "list-item-nsfw" : "" ?>"
+                           <?php else: ?>class="list-item list-item-sel list-group-item <?= $list["nsfw"] ? "list-item-nsfw" : "" ?>"<?php endif ?>>
+                            <div style="display: flex; align-items: center; justify-content: center;">
+                                <!--suppress HtmlFormInputWithoutLabel -->
+                                <input class="form-check-input item-select" onchange="updateBudget();" type="checkbox" value="" data-price="<?= $price ?>" disabled>
+                            </div>
                             <div>
+                                <div class="bg-body-tertiary" style="aspect-ratio: 292/136; border-radius: 0.375rem; background-repeat: no-repeat; background-size: contain; background-position: center; <?php if (isset($item["image"])): ?>background-image: url('<?= $item["image"] ?>');<?php endif; ?>"></div>
+                            </div>
+                            <div <?php if (!isset($item["links"])): ?>style="display: flex; align-items: center;" <?php else: ?>style="margin-top: 10px; margin-bottom: 10px;"<?php endif; ?>>
                                 <div>
-                                    <span id="badge-budget-<?= "item-$list_name-$index" ?>" class="badge-budget badge custom-badge" style="margin-bottom: 10px; display: none; --custom-badge-base: 32, 201, 151;">Recommended</span>
-                                    <span class="badge-most badge custom-badge" style="display: <?php if ($index === 0): ?>inline-block<?php else: ?>none<?php endif; ?>; margin-bottom: 10px; --custom-badge-base: 111, 66, 193;">Most Wanted</span>
-                                </div>
-                                <h5><?php if (isset($item["name"])): ?><?= $item["name"] ?><?php else: ?>(Unnamed)<?php endif; ?></h5>
-                                <div>
-                                    <?php if (isset($item["score"]) || isset($item["note"])): ?><div class="text-muted"><?php if (isset($item["note"]) || isset($notes["item-$list_name-$index"])): ?><i>"<?= $item["note"] ?? $notes["item-$list_name-$index"] ?>"</i><?php endif; ?><?php if (isset($item["score"])): ?><?php if (isset($item["note"]) || isset($notes["item-$list_name-$index"])): ?> · <?php endif; ?>Predicted appreciation: <?= round(($item["score"] / 5) * 100, 1) ?>%<?php endif; ?></div><?php endif; ?>
-                                    <?php if (isset($item["tags"])): ?><div><?= implode(" · ", $item["tags"]) ?></div><?php endif; ?>
-                                    <?php if (isset($item["links"])): ?>
-                                        <div class="list-group" style="margin-top: 10px;">
-                                            <?php foreach ($item["links"] as $link): ?>
-                                                <div onclick="window.open(`<?= $link["link"] ?? "#" ?>`);" style="cursor: pointer;" class="list-group-item list-group-item-action">
-                                                    <div style="display: grid; grid-template-columns: 1fr max-content;">
-                                                        <div><?= $link["name"] ?? "Option" ?></div>
-                                                        <div>
-                                                            <?php if (isset($link["price"])): ?>
-                                                                <b><?= str_replace("%", str_replace(".00", ".--", number_format($link["price"] / 100, 2)), ($item["unit"] ?? "% " . $config["currency"])) ?></b>
-                                                            <?php endif; ?>
-                                                            <?php if (isset($link["source"])): ?>
-                                                                <?php if (isset($link["price"])): ?> · <?php endif; ?>
-                                                                <span><?= $link["source"] ?> ↗</span>
-                                                            <?php endif; ?>
+                                    <div>
+                                        <span id="badge-budget-<?= "item-$list_name-$index" ?>" class="badge-budget badge custom-badge" style="margin-bottom: 10px; display: none; --custom-badge-base: 32, 201, 151;">Recommended</span>
+                                        <span class="badge-most badge custom-badge" style="display: <?php if ($index === 0): ?>inline-block<?php else: ?>none<?php endif; ?>; margin-bottom: 10px; --custom-badge-base: 111, 66, 193;">Most Wanted</span>
+                                    </div>
+                                    <h5><?php if (isset($item["name"])): ?><?= $item["name"] ?><?php else: ?>(Unnamed)<?php endif; ?></h5>
+                                    <div>
+                                        <?php if (isset($item["score"]) || isset($item["note"])): ?><div class="text-muted"><?php if (isset($item["note"]) || isset($notes["item-$list_name-$index"])): ?><i>"<?= $item["note"] ?? $notes["item-$list_name-$index"] ?>"</i><?php endif; ?><?php if (isset($item["score"])): ?><?php if (isset($item["note"]) || isset($notes["item-$list_name-$index"])): ?> · <?php endif; ?>Predicted appreciation: <?= round(($item["score"] / 5) * 100, 1) ?>%<?php endif; ?></div><?php endif; ?>
+                                        <?php if (isset($item["tags"])): ?><div><?= implode(" · ", $item["tags"]) ?></div><?php endif; ?>
+                                        <?php if (isset($item["links"])): ?>
+                                            <div class="list-group" style="margin-top: 10px;">
+                                                <?php foreach ($item["links"] as $link): ?>
+                                                    <div onclick="window.open(`<?= $link["link"] ?? "#" ?>`);" style="cursor: pointer;" class="list-group-item list-group-item-action">
+                                                        <div style="display: grid; grid-template-columns: 1fr max-content;">
+                                                            <div><?= $link["name"] ?? "Option" ?></div>
+                                                            <div>
+                                                                <?php if (isset($link["price"])): ?>
+                                                                    <b><?= str_replace("%", str_replace(".00", ".--", number_format($link["price"] / 100, 2)), ($item["unit"] ?? "% " . $config["currency"])) ?></b>
+                                                                <?php endif; ?>
+                                                                <?php if (isset($link["source"])): ?>
+                                                                    <?php if (isset($link["price"])): ?> · <?php endif; ?>
+                                                                    <span><?= $link["source"] ?> ↗</span>
+                                                                <?php endif; ?>
+                                                            </div>
                                                         </div>
                                                     </div>
-                                                </div>
-                                            <?php endforeach; ?>
-                                        </div>
-                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            </div>
+                                        <?php endif; ?>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
-                        <div style="display: flex; align-items: center; justify-content: end;">
-                            <div style="text-align: right;">
-                                <?php if (isset($item["price"])): ?>
-                                    <h4 style="text-align: right;">
-                                        <?php if ($item["price"] > 0): ?>
-                                            <?= str_replace("%", str_replace(".00", ".--", number_format($item["price"] / 100, 2)), ($item["unit"] ?? "% " . $config["currency"])) ?>
-                                        <?php else: ?>
-                                            <span class="text-muted"><?= $item["date"] ?></span>
-                                        <?php endif; ?>
-                                    </h4>
-                                <?php endif; ?>
-                                <?php if (isset($item["source"])): ?><div><?= $item["source"] ?> ↗</div><?php endif; ?>
+                            <div style="display: flex; align-items: center; justify-content: end;">
+                                <div style="text-align: right;">
+                                    <?php if (isset($item["price"])): ?>
+                                        <h4 style="text-align: right;">
+                                            <?php if ($item["price"] > 0): ?>
+                                                <?= str_replace("%", str_replace(".00", ".--", number_format($item["price"] / 100, 2)), ($item["unit"] ?? "% " . $config["currency"])) ?>
+                                            <?php else: ?>
+                                                <span class="text-muted"><?= $item["date"] ?></span>
+                                            <?php endif; ?>
+                                        </h4>
+                                    <?php endif; ?>
+                                    <?php if (isset($item["source"])): ?><div><?= $item["source"] ?> ↗</div><?php endif; ?>
+                                </div>
                             </div>
-                        </div>
-                    </a>
-                <?php endforeach; ?>
+                        </a>
+                    <?php endforeach; ?>
+                </div>
             </div>
         <?php endforeach; ?>
     </div>
@@ -567,6 +570,16 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
         }
 
         changeOrder();
+
+        function toggleNSFW() {
+            if (document.getElementById("nsfw-toggle").innerText === "Show not safe for work items" && confirm("Are you sure you want to show not safe for work (NSFW) items? These items may not be appropriate for everyone.")) {
+                document.getElementById("nsfw-toggle").innerText = "Hide not safe for work items";
+                document.body.classList.add("show-nsfw");
+            } else {
+                document.getElementById("nsfw-toggle").innerText = "Show not safe for work items";
+                document.body.classList.remove("show-nsfw");
+            }
+        }
     </script>
 </div>
 </body>
