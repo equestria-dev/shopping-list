@@ -1,5 +1,5 @@
 # Enter your name here, it will show up in the UI:
-name: Raindrops
+name: The Starscouts
 
 # Enable the Vercel analytics
 vercel: true
@@ -25,7 +25,7 @@ steam:
   name: Video games
 
   # Your Steam user ID or profile name
-  id: RaindropsSys
+  id: Starscouts
 
   # The recommendation index of Steam
   recommend: 0
