@@ -67,11 +67,12 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
                 <option value="ahl">Sort by Predicted appreciation (high to low)</option>
                 <option value="rec">Sort by recommendation</option>
             </select>
-            <span style="margin-bottom: 30px; margin-top: 10px; display: inline-block;" class="small text-muted">Revert to "Sort by <?= $config["name"] ?>'s order" to check items and add them to your list.</span>
         </div>
         <!--suppress HtmlFormInputWithoutLabel -->
-        <input onchange="updateBudget();" type="number" style="margin-bottom: 30px; height: 38px;" placeholder="Enter your budget here" id="budget" class="form-control">
+        <input onchange="updateBudget();" type="number" style="height: 38px;" placeholder="Enter your budget here" id="budget" class="form-control">
     </div>
+
+    <span style="margin-bottom: 30px; margin-top: 10px; display: inline-block;" class="small text-muted">Revert to "Sort by <?= $config["name"] ?>'s order" to check items and add them to your list. · <a onclick="toggleNSFW();" id="nsfw-toggle" href="#">Show not safe for work items</a></span>
 
     <div id="budget-outer" style="margin-bottom: 30px; display: none;">
         <h3>Your budget</h3>
@@ -173,10 +174,6 @@ $config = json_decode(file_get_contents("../data/config.json"), true);
         If you would like to transfer this data to other devices or back it up, you will need to <a href="#" onclick="dataImport();">import</a> or <a href="#" onclick="dataExport();">export</a> it.
     </div>
     <?php endif; ?>
-
-    <p>
-        <a onclick="toggleNSFW();" id="nsfw-toggle" href="#">Show not safe for work items</a>
-    </p>
 
     <?php if (isset($config["notice"])): ?>
     <div style="margin-bottom: 30px;" class="alert alert-warning"><?= $config["notice"] ?></div>
