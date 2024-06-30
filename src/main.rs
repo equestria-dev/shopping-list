@@ -2,13 +2,14 @@ mod config;
 mod error;
 mod html;
 
-use std::process;
+use std::{fs, process};
 use std::collections::HashMap;
 use config::{ItemConfig, ListConfig, SteamSubitem};
 use log::{error, info, LevelFilter};
 use simple_logger::SimpleLogger;
 use crate::config::{Config, SteamData};
 use crate::error::WishingStarError;
+use crate::html::generate_template;
 
 fn main() {
     SimpleLogger::new().with_level(LevelFilter::Info).init().unwrap();
@@ -32,7 +33,7 @@ fn start() -> Result<(), WishingStarError> {
 
         let mut steam_list: ListConfig = ListConfig {
             nsfw: false,
-            title: config.steam.name,
+            title: config.steam.name.clone(),
             recommend: config.steam.recommend,
             items: vec![],
         };
@@ -62,6 +63,9 @@ fn start() -> Result<(), WishingStarError> {
         info!("Found {} Steam games", steam_list.items.len());
         config.lists.insert(String::from("steam"), steam_list);
     }
+
+    info!("Rendering HTML");
+    fs::write("./app/app.html", generate_template(config).into_string().as_bytes())?;
 
     Ok(())
 }
