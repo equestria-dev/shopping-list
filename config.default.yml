@@ -1,7 +1,7 @@
 # Enter your name here, it will show up in the UI:
 name: The Starscouts
 
-# Enable the Vercel analytics
+# Enable deploying to Vercel
 vercel: true
 
 # Set the default currency
