@@ -5,8 +5,6 @@ function changeOrder() {
     switch (sort) {
         case "plh":
         case "phl":
-        case "alh":
-        case "ahl":
             document.getElementById("all-items").style.display = "none";
             document.getElementById("filter-results").style.display = "";
 
@@ -17,8 +15,8 @@ function changeOrder() {
             }
 
             items.sort((a, b) => {
-                return parseFloat((sort.endsWith("lh") ? a : b).getAttribute(sort.startsWith("p") ? "data-price" : "data-score")) -
-                    parseFloat((sort.endsWith("lh") ? b : a).getAttribute(sort.startsWith("p") ? "data-price" : "data-score"));
+                return parseFloat((sort.endsWith("lh") ? a : b).getAttribute("data-price")) -
+                    parseFloat((sort.endsWith("lh") ? b : a).getAttribute("data-price"));
             });
 
             document.getElementById("filter-results").innerHTML = items.map(i => i.outerHTML).join("");
