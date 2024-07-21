@@ -7,9 +7,9 @@ pub fn budget(currency: &str) -> Markup {
 
             p style="display: grid; grid-template-columns: 1fr max-content; margin-bottom: 10px;" {
                 span {
-                    "You allocated"
+                    "You allocated "
                     span #budget-value { "0.00" }
-                    " " (currency) " and are currently using"
+                    " " (currency) " and are currently using "
                     span #budget-usage { "0.00" }
                     " " (currency) " ("
                     span #budget-usage-percent { "" } " %)"
