@@ -1,12 +1,12 @@
 [package]
 name = "wishing-star"
-version = "2.2.0"
+version = "2.2.1"
 edition = "2021"
 
 [dependencies]
-ureq = { version = "2.9.7", features = ["json"] }
+ureq = { version = "2.10.0", features = ["json"] }
 serde = "1.0.203"
-serde_yml = "0.0.10"
+serde_yml = "0.0.11"
 log = "0.4.22"
 simple_logger = "5.0.0"
 maud = "0.26.0"
