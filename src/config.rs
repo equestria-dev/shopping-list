@@ -97,8 +97,7 @@ impl SortedSteamWishlist {
     ) -> ListConfig {
         for (_, (id, data)) in self.0 {
             let first_sub = &data.subs[0];
-            let price_float = first_sub.price.parse::<f32>().unwrap_or(-100.0);
-            let price_int = (price_float * 10.0) as i32;
+            let price_int = first_sub.price.parse::<i32>().unwrap_or(-100);
 
             let item = ItemConfig {
                 _id: Some(id),

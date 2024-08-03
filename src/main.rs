@@ -53,6 +53,14 @@ fn start() -> Result<(), WishingStarError> {
 
     if config.vercel {
         info!("Deploying to Vercel");
+
+        #[cfg(windows)]
+        Command::new("vercel.cmd")
+            .current_dir("./app")
+            .arg("--prod")
+            .status()?;
+
+        #[cfg(not(windows))]
         Command::new("vercel")
             .current_dir("./app")
             .arg("--prod")

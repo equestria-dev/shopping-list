@@ -56,7 +56,7 @@ pub fn faq() -> Markup {
                 #"faq-4".accordion-collapse.collapse data-bs-parent="#faq" {
                     .accordion-body {
                         p {
-                            r#"For items that are available on Steam, Amazon, Google Play, Apple stores and other
+                            r#"For items that are available on Steam, Amazon, Google Play and other
                             compatible platforms, a gift card would be preferred to prevent issues with delivery.
                             Steam games must be purchased with gift cards due to regional restrictions. For items
                             that cannot be bought with a gift card, you will have to order them yourself and enter

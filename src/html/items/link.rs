@@ -28,7 +28,7 @@ pub fn link(inner: Markup, list: &ListConfig, item: &ItemConfig, price: i32, id:
                 } {
                 (inner)
             }
-        } else {
+        } @else {
             div data-recommend=(list.recommend) data-list=(list.title)
                 id={ "item-" (list.title) "-" (id) } data-score="0"
                 data-price=(price)
