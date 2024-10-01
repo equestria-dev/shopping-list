@@ -406,6 +406,19 @@ dependencies = [
 ]
 
 [[package]]
+name = "shopping-list"
+version = "3.0.0"
+dependencies = [
+ "log",
+ "maud",
+ "md5",
+ "serde",
+ "serde_yml",
+ "simple_logger",
+ "ureq",
+]
+
+[[package]]
 name = "simple_logger"
 version = "5.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -715,19 +728,6 @@ name = "windows_x86_64_msvc"
 version = "0.52.5"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "bec47e5bfd1bff0eeaf6d8b485cc1074891a197ab4225d504cb7a1ab88b02bf0"
-
-[[package]]
-name = "wishing-star"
-version = "2.2.3"
-dependencies = [
- "log",
- "maud",
- "md5",
- "serde",
- "serde_yml",
- "simple_logger",
- "ureq",
-]
 
 [[package]]
 name = "zeroize"

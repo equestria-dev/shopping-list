@@ -28,21 +28,17 @@ pub fn item(item: &ItemConfig, list: &ListConfig) -> Markup {
         (link(html! {
             (base(item, item_price))
 
-            div style=(if let Some(_) = &item.variants {
-                "display: flex; align-items: center;"
-            } else {
-                "margin-top: 10px; margin-bottom: 10px;"
-            }) {
+            div style="display: flex; align-items: center; margin-top: 10px; margin-bottom: 10px;" {
                 div {
                     div {
-                        span.badge-budget.badge.custom-badge id={ "badge-budget-item-" (list.title) "-" (id) } style="margin-bottom: 10px; display: none; --custom-badge-base: 32, 201, 151;" {
+                        span.fella-badge-notice.badge-budget id={ "badge-budget-item-" (list.title) "-" (id) } style="margin-bottom: 5px; display: none; --fella-badge-notice-rgb: 32, 201, 151 !important;" {
                             "Recommended"
                         }
-                        span.badge-most.badge.custom-badge style="display: none; margin-bottom: 10px; --custom-badge-base: 111, 66, 193;" {
+                        span.fella-badge-notice.badge-most style="display: none; margin-bottom: 5px; --fella-badge-notice-rgb: 111, 66, 193 !important;" {
                             "Most Wanted"
                         }
                     }
-                    h5 { (item.name) }
+                    h3 style="margin-top: 0; margin-bottom: 5px;" { (item.name) }
                     (details(item))
                 }
             }

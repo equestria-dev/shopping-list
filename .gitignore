@@ -4,6 +4,7 @@ app/.vercel
 app/.env.development.local
 app/app.html
 config.yml
+config*.yml
 .buildroot
 build.tar.xz
 node_modules

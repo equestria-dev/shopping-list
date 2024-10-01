@@ -9,8 +9,10 @@ pub fn base(item: &ItemConfig, price: i32) -> Markup {
         }
 
         div {
-            .bg-body-tertiary style={
-                "aspect-ratio: 292/136; border-radius: 0.375rem; background-repeat: no-repeat; background-size: contain; background-position: center; background-image: url('"
+            div style={
+                "background-color: var(--fella-bg-secondary-dim); aspect-ratio: 292/136;"
+                "border-radius: 0.375rem; background-repeat: no-repeat; background-size: contain;"
+                "background-position: center; background-image: url('"
                 (item.image)
                 "')"
             } {}

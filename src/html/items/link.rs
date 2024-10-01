@@ -10,19 +10,12 @@ pub fn link(inner: Markup, list: &ListConfig, item: &ItemConfig, price: i32, id:
                 data-price=(price)
                 href=(link)
                 class={
-                    "list-item list-item-sel list-group-item "
+                    "list-item fella-list-item fella-list-item-padded "
                     (
                         if let Some(_) = &item.link {
-                            "list-group-item-action "
+                            "fella-list-link "
                         } else {
                             " "
-                        }
-                    )
-                    (
-                        if list.nsfw {
-                            "list-item-nsfw"
-                        } else {
-                            ""
                         }
                     )
                 } {
@@ -39,13 +32,6 @@ pub fn link(inner: Markup, list: &ListConfig, item: &ItemConfig, price: i32, id:
                             "list-group-item-action "
                         } else {
                             " "
-                        }
-                    )
-                    (
-                        if list.nsfw {
-                            "list-item-nsfw"
-                        } else {
-                            ""
                         }
                     )
                 } {

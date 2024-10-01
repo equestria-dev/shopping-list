@@ -1,5 +1,5 @@
 # Enter your name here, it will show up in the UI:
-name: The Starscouts
+name: Your Name
 
 # Enable deploying to Vercel
 vercel: true
@@ -8,13 +8,13 @@ vercel: true
 currency: €
 
 # Show the Frequently asked questions section
-faq: true
+# - Removed in version 3.0.0 -
 
 # Enable importing/exporting user data
 export: true
 
 # Show a notice on the website
-#notice: Stuff is wrong!
+# - Removed in version 3.0.0 -
 
 # Configure the default Steam module
 steam:
@@ -25,14 +25,13 @@ steam:
   name: Video games
 
   # Your Steam user ID or profile name
-  id: Starscouts
+  id: YourName
 
   # The recommendation index of Steam
   recommend: 0
 
   # Notes to associate with Steam games
-  notes:
-    219890: A friend recommended this game, don't know much about it.
+  # - Removed in version 3.0.0 -
 
 # Add custom items to the wishlist
 custom:
@@ -41,7 +40,7 @@ custom:
   tech:
 
     # Whether the group should be considered not safe for work
-    nsfw: false
+    # - Removed in version 3.0.0 -
 
     # Name for the group
     name: Technology and multimedia
@@ -70,10 +69,7 @@ custom:
         source: Amazon.fr
 
       # Tags associated with the item
-        tags:
-          - Headphones
-          - Studio equipment
-          - Professional audio
+        # - Removed in version 3.0.0 -
 
       # Note associated with the item
-        note: Our current headphones are (slowly) breaking down (pieces of plastic are falling) and are not really that great quality. We would appreciate having higher quality headphones for listening to and making music.
+        # - Removed in version 3.0.0 -

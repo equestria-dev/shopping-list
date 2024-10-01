@@ -21,19 +21,14 @@ pub fn budget(currency: &str) -> Markup {
                 }
             }
 
-            .progress style="margin-bottom: 10px;" {
-                #budget-progress.progress-bar {}
-                #budget-progress-red.progress-bar.bg-danger {}
-            }
-
             div style="display: grid; grid-template-columns: 1fr 1fr;" {
-                .form-check style="margin-bottom: 10px;" {
-                    input #show-only-selected class="form-check-input" type="checkbox" onchange="updateBudget()";
-                    label class="form-check-label" for="show-only-selected" { "Only show checked items" }
+                div style="margin-bottom: 10px;" {
+                    input #show-only-selected type="checkbox" onchange="updateBudget()";
+                    label for="show-only-selected" { "Only show checked items" }
                 }
-                .form-check style="margin-bottom: 10px;" {
-                    input #hide-oob class="form-check-input" type="checkbox" onchange="updateBudget()";
-                    label class="form-check-label" for="hide-oob" { "Hide out of budget items" }
+                div style="margin-bottom: 10px;" {
+                    input #hide-oob  type="checkbox" onchange="updateBudget()";
+                    label for="hide-oob" { "Hide out of budget items" }
                 }
             }
         }

@@ -15,7 +15,6 @@ pub struct SteamData {
     pub name: String,
     pub capsule: String,
     pub release_string: String,
-    pub tags: Vec<String>,
     pub subs: Vec<SteamSubitem>,
     pub priority: u32,
 }
@@ -26,7 +25,6 @@ pub struct SteamConfig {
     pub name: String,
     pub id: String,
     pub recommend: u32,
-    pub notes: HashMap<u32, String>,
 }
 
 #[derive(Deserialize)]
@@ -48,8 +46,6 @@ pub struct ItemConfig {
     pub unit: String,
     pub image: String,
     pub source: Option<String>,
-    pub tags: Vec<String>,
-    pub note: Option<String>,
     pub date: Option<String>,
 }
 
@@ -59,7 +55,6 @@ pub struct SortedSteamWishlist(BTreeMap<u32, (u32, SteamData)>);
 
 #[derive(Deserialize)]
 pub struct ListConfig {
-    pub nsfw: bool,
     #[serde(alias = "title")]
     pub title: String,
     pub recommend: u32,
@@ -71,9 +66,7 @@ pub struct Config {
     pub name: String,
     pub vercel: bool,
     pub currency: String,
-    pub faq: bool,
     pub export: bool,
-    pub notice: Option<String>,
     pub steam: SteamConfig,
     #[serde(rename = "custom")]
     pub lists: HashMap<String, ListConfig>,
@@ -92,7 +85,6 @@ impl SortedSteamWishlist {
     pub fn fill_list_config(
         self,
         mut list_config: ListConfig,
-        config: &SteamConfig,
         currency: &String,
     ) -> ListConfig {
         for (_, (id, data)) in self.0 {
@@ -108,12 +100,6 @@ impl SortedSteamWishlist {
                 unit: format!("% {}", currency),
                 image: data.capsule,
                 source: Some(String::from("Steam")),
-                tags: data.tags,
-                note: if let Some(note) = config.notes.get(&id) {
-                    Some(note.to_owned())
-                } else {
-                    None
-                },
                 date: Some(data.release_string),
             };
 
@@ -143,12 +129,10 @@ impl ListConfig {
 
         let steam_list = wishlist.fill_list_config(
             ListConfig {
-                nsfw: false,
                 title: config.name.clone(),
                 recommend: config.recommend,
                 items: vec![],
             },
-            config,
             currency,
         );
 

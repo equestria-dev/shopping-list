@@ -4,9 +4,9 @@ use crate::config::ItemVariantConfig;
 
 pub fn variants(variants_list: &Vec<ItemVariantConfig>, unit: &str) -> Markup {
     html! {
-        .list-group style="margin-top: 10px;" {
+        .fella-list-container style="margin-top: 10px;" {
             @for variant in variants_list {
-                .list-group-item.list-group-item-action style="cursor: pointer;" onclick={ "window.open(`" (variant.link) "`);" } {
+                .fella-list-item.fella-list-item-padded.fella-list-link style="cursor: pointer;" onclick={ "window.open(`" (variant.link) "`);" } {
                     div style="display: grid; grid-template-columns: 1fr max-content;" {
                         div { (variant.name) }
                         div {
