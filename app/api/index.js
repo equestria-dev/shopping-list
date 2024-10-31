@@ -24,7 +24,7 @@ module.exports = {
             let config = await get("shopping-list");
 
             if (url.searchParams.has("code")) {
-                let res = await fetch("https://account.equestria.dev/hub/api/rest/oauth2/token", {
+                let res = await fetch("https://id.floo.fi/hub/api/rest/oauth2/token", {
                     method: "POST",
                     headers: {
                         'Authorization': "Basic " + btoa(config['id'] + ":" + config['secret']),
@@ -36,7 +36,7 @@ module.exports = {
                 let data = await res.json();
 
                 if (data["access_token"]) {
-                    let res = await fetch("https://account.equestria.dev/hub/api/rest/users/me", {
+                    let res = await fetch("https://id.floo.fi/hub/api/rest/users/me", {
                         headers: {
                             'Authorization': "Bearer " + data["access_token"],
                             'Accept': 'application/json'
@@ -90,7 +90,7 @@ module.exports = {
             return new Response(null, {
                 status: 307,
                 headers: {
-                    Location: "https://account.equestria.dev/hub/api/rest/oauth2/auth?client_id=" + config['id'] + "&response_type=code&redirect_uri=" + encodeURIComponent(config['redirect']) + "&scope=Hub&request_credentials=default&access_type=offline"
+                    Location: "https://id.floo.fi/hub/api/rest/oauth2/auth?client_id=" + config['id'] + "&response_type=code&redirect_uri=" + encodeURIComponent(config['redirect']) + "&scope=Hub&request_credentials=default&access_type=offline"
                 }
             });
         } else {

@@ -28,8 +28,8 @@ pub fn head(name: &str) -> Markup {
 
             title { (name) "'s Shopping List" }
 
-            link href="https://fella.floo.fi/0.3.3/fella.min.css" rel="stylesheet"
-                integrity="sha384-1Im8AmCEPI7+gL0sQFNekjJ/RE5oo3q2Up8muPiUO5Ho6QKmdx74KgECaEx4yWqV"
+            link href="https://fella.floo.fi/0.3.4/fella.min.css" rel="stylesheet"
+                integrity="sha384-CgGuCRnfADK2xVr1prHidzyuBRNFac8DehAwfqBx2kIXjLZ0Zsq/DTcFysSrRySg"
                 crossorigin="anonymous";
             link href="/assets/logo.png" rel="shortcut icon" type="image/png";
 
