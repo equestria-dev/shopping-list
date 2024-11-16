@@ -33,6 +33,11 @@ pub fn head(name: &str) -> Markup {
                 crossorigin="anonymous";
             link href="/assets/logo.png" rel="shortcut icon" type="image/png";
 
+            script defer data-domain="shopping.floo.fi" src="https://insights.floo.fi/js/script.file-downloads.hash.outbound-links.js";
+            script {
+                r#"window.plausible = window.plausible || function() { (window.plausible.q = window.plausible.q || []).push(arguments) }"#
+            }
+
             style { (PreEscaped(STYLESHEET)) }
         }
     }
