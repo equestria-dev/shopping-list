@@ -28,8 +28,7 @@ pub fn head(name: &str) -> Markup {
 
             title { (name) "'s Shopping List" }
 
-            link href="https://fella.floo.fi/0.3.4/fella.min.css" rel="stylesheet"
-                integrity="sha384-CgGuCRnfADK2xVr1prHidzyuBRNFac8DehAwfqBx2kIXjLZ0Zsq/DTcFysSrRySg"
+            link href="https://fella.floo.fi/fella.min.css" rel="stylesheet"
                 crossorigin="anonymous";
             link href="/assets/logo.png" rel="shortcut icon" type="image/png";
 

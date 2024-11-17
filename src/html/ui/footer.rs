@@ -9,5 +9,6 @@ pub fn footer(currency: &str) -> Markup {
         }
 
         script src="/assets/app.js" {}
+        script src="https://fella.floo.fi/fella.min.js" {}
     }
 }

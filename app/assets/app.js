@@ -1,15 +1,3 @@
-window.onscroll = () => {
-    updateScroll();
-}
-
-function updateScroll() {
-    if (window.scrollY === 0) {
-        document.getElementById("navbar").classList.add("fella-nav-no-border");
-    } else {
-        document.getElementById("navbar").classList.remove("fella-nav-no-border");
-    }
-}
-
 function makePositive(n) {
     if (n > 0) {
         return n;
@@ -124,7 +112,6 @@ function updateBudget(restore) {
 
         for (let item of eligible) {
             let itemPrice = makePositive(parseInt(item.getAttribute("data-price")) / 100);
-            console.log(item, itemPrice, leftOver, !(itemPrice > leftOver));
             if (itemPrice > leftOver) continue;
 
             leftOver -= itemPrice;
@@ -179,7 +166,6 @@ document.getElementById("show-only-selected").checked = localStorage.getItem("sh
 document.getElementById("hide-oob").checked = localStorage.getItem("hide-oob") === "1" ?? false;
 
 let selected = (localStorage.getItem("items") ?? "").split(",").filter(i => i && i.trim() !== "");
-console.log(selected);
 
 updateBudget(true);
 
@@ -197,7 +183,7 @@ document.body.classList.add("show-nsfw");
 
 window.onload = () => {
     setTimeout(() => {
-        document.getElementById("loader").style.display = "none";
         document.getElementById("app").style.display = "";
+        completeLoad();
     }, 1000);
 }
